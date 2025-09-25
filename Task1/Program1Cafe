@@ -1,0 +1,35 @@
+#include <iostream>
+using namespace std;
+
+int main() {
+    int item1 = 100;
+    int *it = &item1;
+    int item2 = 200;
+    int *ite = &item2;
+    int item3 = 300;
+    int *item = &item3;
+    int n, m;
+    int *nptr = &n;
+    int *mptr = &m;
+
+    cout << "Enter the amount (quantity): ";
+    cin >> *nptr;
+    cout << "Which item do you want (1, 2, or 3): ";
+    cin >> *mptr;
+
+    
+    if (*mptr == 1) {
+        cout << "Cost of item1: " << (*nptr) * (*it) << endl;
+    } else if (*mptr == 2) {
+        cout << "Cost of item2: " << (*nptr) * (*ite) << endl;
+    } else if (*mptr == 3) {
+        cout << "Cost of item3: " << (*nptr) * (*item) << endl;
+    } else {
+        cout << "Invalid item selected. Available items and their costs for quantity " << *nptr << ":" << endl;
+        cout << "Item1: " << (*nptr) * (*it) << endl;
+        cout << "Item2: " << (*nptr) * (*ite) << endl;
+        cout << "Item3: " << (*nptr) * (*item) << endl;
+    }
+
+    return 0;
+}
