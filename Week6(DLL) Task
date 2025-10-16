@@ -1,0 +1,63 @@
+#include<iostream>
+#include<sstream>
+using namespace std;
+struct Node{
+	public:
+		string ip;
+		Node* next;
+		Node* prev;
+		Node(string val):ip(val),next(nullptr),prev(nullptr){
+		};
+};
+class DLL{
+	private:
+		Node* head;
+		Node* tail;
+	public:
+		DLL():head(nullptr),tail(nullptr){
+		};
+	
+	void insertAtbegining(string val){
+		Node* newNode= new Node(val);
+		if(!head){
+			head=tail=newNode;
+		}
+		else{ 
+			newNode->next=head;
+			head->prev=newNode;
+			head=newNode;
+		}
+	}
+	void display(){
+		Node* current=head;
+		if(!current){
+			cout<<"List is empty";
+			return;
+		}
+		while (current){
+			cout<<current->ip<<"->";
+			current=current->next;
+		}
+		cout<<"Nullptr";
+	}
+	~DLL() {
+        Node* current = head;
+        while (current) {
+            Node* next = current->next;
+            delete current;
+            current = next;
+        }
+        head = tail = nullptr;
+    }
+};
+int main(){
+	string val="192.168.1.10,10.0.0.5,172.16.0.1,203.0.113.5,198.51.100.23,8.8.8.8,8.8.4.4,192.0.2.45,10.10.10.10,172.20.14.2,52.214.10.7,34.102.136.180,185.199.108.153,13.35.66.1,44.240.20.10";
+	DLL n1;
+	stringstream ss(val);
+	string ip;
+	while(getline(ss,val,',')){
+		n1.insertAtbegining(val);
+	}
+	n1.display();
+	return 0;
+}
