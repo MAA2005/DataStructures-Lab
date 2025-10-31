@@ -1,0 +1,99 @@
+#include<iostream>
+using namespace std;
+class Node{
+	public:
+		int id;
+		Node* next;
+		Node* prev;
+	Node(int id):id(id),next(nullptr),prev(nullptr){};
+};
+class ERQ{
+	public:
+		Node* head;
+		Node* tail;
+		ERQ():head(nullptr),tail(nullptr){};
+	void insertAtBeginning (int id){
+		if(head==nullptr){
+			Node* n=new Node(id);
+			head=n;
+			tail=head;
+			}
+		else 
+		{
+			Node* n=new Node(id);
+			n->next=head;
+			head->prev=n;
+			head=n;
+		}
+		}
+	void insertAtEnd(int id){
+		Node* n=new Node(id);
+		if (head==nullptr){
+			head=n;
+			tail=head;
+		}
+		else{
+			tail->next=n;
+			n->prev=tail;
+			tail=n;
+		}
+	}
+	void insertAtPosition(int id,int pos){
+		if(pos<=1 || head ==nullptr){
+			insertAtBeginning(id);
+			return;
+		}
+		Node* temp=head;
+		for(int i=1;i<pos-1 && temp->next !=nullptr;i++){
+			temp=temp->next;
+		}
+		if(temp->next ==nullptr){
+			insertAtEnd(id);
+			return;
+		}
+		Node* n = new Node(id);
+		n->next = temp->next;
+		temp->next->prev = n;  
+		n->prev = temp;
+		temp->next = n;
+	}
+	void deletefromBeginning(){
+		if(head==nullptr){
+			cout<<"All patients are cleared.\n";
+			return;
+		}
+		Node* temp=head;
+		if(head==tail){
+			head=tail=nullptr;
+		}
+		else{head=head->next;
+		head->prev=nullptr;
+		}
+		delete temp;	
+	}
+	void Display(){
+		Node* temp=head;
+		cout<<"Current Patients in line: ";
+		while(temp!=nullptr){
+			cout<< temp->id;
+			if(temp->next!=nullptr)cout<<"->";
+			temp =temp->next;
+		}
+		cout<<endl;
+	}
+};
+int main(){
+	ERQ q1;
+	q1.insertAtEnd(101);
+	q1.Display();
+    q1.insertAtEnd(102);
+    q1.Display();
+	q1.insertAtBeginning(200);
+	q1.Display();
+   q1.insertAtPosition(150, 2);
+   q1.Display();
+   q1.deletefromBeginning();
+   q1.insertAtEnd(300);
+   q1.Display();
+	return 0;
+}
